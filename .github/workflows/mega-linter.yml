@@ -30,8 +30,9 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: 1.59
-          override: true
-          components: cargo, clippy
+          # override: true
+          components: clippy
+          default: true
       - name: print rust info
         run: |
           echo "HOME=$HOME"
@@ -40,6 +41,7 @@ jobs:
           rustup toolchain list || true
           cargo version || true
           cargo clippy --version || true
+
   build:
     name: MegaLinter
     runs-on: ubuntu-latest
