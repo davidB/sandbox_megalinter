@@ -23,6 +23,35 @@ concurrency:
 jobs:
   debug:
     runs-on: ubuntu-latest
+    steps:
+      - name: print rust info (before)
+        run: |
+          echo "HOME=$HOME"
+          whoami
+          ls -al "$HOME"
+          rustup toolchain list || true
+          rustup show || true
+          cargo version || true
+          cargo clippy --version || true
+      - name: Install latest stable
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          components: clippy
+          default: true
+      - name: print rust info (after)
+        run: |
+          echo "HOME=$HOME"
+          whoami
+          ls -al "$HOME"
+          rustup toolchain list || true
+          rustup show || true
+          cargo version || true
+          cargo clippy --version || true
+
+  debug-container:
+    runs-on: ubuntu-latest
     container:
       image: megalinter/megalinter-rust:v5
     steps:
@@ -32,13 +61,14 @@ jobs:
           whoami
           ls -al "$HOME"
           rustup toolchain list || true
+          rustup show || true
           cargo version || true
           cargo clippy --version || true
       - name: Install latest stable
         uses: actions-rs/toolchain@v1
         with:
+          profile: minimal
           toolchain: stable
-          # override: true
           components: clippy
           default: true
       - name: print rust info (after)
@@ -47,6 +77,7 @@ jobs:
           whoami
           ls -al "$HOME"
           rustup toolchain list || true
+          rustup show || true
           cargo version || true
           cargo clippy --version || true
 
@@ -60,7 +91,13 @@ jobs:
         with:
           token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
           fetch-depth: 0
-
+      - name: Install latest stable
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          components: clippy
+          default: true
       # MegaLinter
       - name: MegaLinter
         id: ml
