@@ -91,13 +91,16 @@ jobs:
         with:
           token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
           fetch-depth: 0
-      - name: Install latest stable
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          components: clippy
-          default: true
+      # - name: Install latest stable
+      #   uses: actions-rs/toolchain@v1
+      #   with:
+      #     profile: minimal
+      #     toolchain: stable
+      #     components: clippy
+      #     default: true
+      - run: |
+          ln -s $HOME/.cargo /root/.cargo
+          ln -s $HOME/.cargo /root/.rustup
       # MegaLinter
       - name: MegaLinter
         id: ml
