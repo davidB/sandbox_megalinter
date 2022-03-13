@@ -26,6 +26,12 @@ jobs:
     container:
       image: megalinter/megalinter-rust:v5
     steps:
+      - name: Install latest nightly
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: 1.59
+          override: true
+          components: cargo, clippy
       - name: print rust info
         run: |
           echo "HOME=$HOME"
