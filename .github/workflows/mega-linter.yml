@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  debug:
+  debug-in-runner:
     runs-on: ubuntu-latest
     steps:
       - name: print rust info (before)
@@ -50,12 +50,14 @@ jobs:
           cargo version || true
           cargo clippy --version || true
 
-  debug-container:
+  debug-in-megalinter-container:
     runs-on: ubuntu-latest
     container:
       image: megalinter/megalinter-rust:v5
     steps:
       - name: print rust info (before)
+        env:
+          RUSTUP_TOOLCHAIN: stable
         run: |
           echo "HOME=$HOME"
           whoami
@@ -109,10 +111,9 @@ jobs:
         env:
           # All available variables are described in documentation
           # https://megalinter.github.io/configuration/
-          VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }} # Validates all source when push on main, else just the git diff with main. Set &#39;true&#39; if you always want to lint all sources
+          VALIDATE_ALL_CODEBASE: true # ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }} # Validates all source when push on main, else just the git diff with main. Set &#39;true&#39; if you always want to lint all sources
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # ADD YOUR CUSTOM ENV VARIABLES HERE TO OVERRIDE VALUES OF .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
-          HOME: /root
           RUSTUP_TOOLCHAIN: stable
 
       # Upload MegaLinter artifacts
