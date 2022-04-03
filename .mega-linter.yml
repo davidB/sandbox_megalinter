@@ -16,3 +16,4 @@ SHOW_ELAPSED_TIME: true
 FILEIO_REPORTER: false
 # DISABLE_ERRORS: true # Uncomment if you want MegaLinter to detect errors but not block CI to pass
 # YAML_FILTER_REGEX_EXCLUDE: "(devops/chart/templates)"
+RUST_CLIPPY_ARGUMENTS: --workspace --all-features --all-targets -- --deny warnings --allow deprecated
