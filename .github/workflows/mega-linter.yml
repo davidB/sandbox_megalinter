@@ -33,22 +33,22 @@ jobs:
           rustup show || true
           cargo version || true
           cargo clippy --version || true
-      - name: Install latest stable
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          components: clippy
-          default: true
-      - name: print rust info (after)
-        run: |
-          echo "HOME=$HOME"
-          whoami
-          ls -al "$HOME"
-          rustup toolchain list || true
-          rustup show || true
-          cargo version || true
-          cargo clippy --version || true
+      # - name: Install latest stable
+      #   uses: actions-rs/toolchain@v1
+      #   with:
+      #     profile: minimal
+      #     toolchain: stable
+      #     components: clippy
+      #     default: true
+      # - name: print rust info (after)
+      #   run: |
+      #     echo "HOME=$HOME"
+      #     whoami
+      #     ls -al "$HOME"
+      #     rustup toolchain list || true
+      #     rustup show || true
+      #     cargo version || true
+      #     cargo clippy --version || true
 
   debug-in-megalinter-container:
     runs-on: ubuntu-latest
@@ -66,24 +66,24 @@ jobs:
           rustup show || true
           cargo version || true
           cargo clippy --version || true
-      - name: Install latest stable
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          components: clippy
-          default: true
-      - name: print rust info (after)
-        env:
-          RUSTUP_TOOLCHAIN: stable
-        run: |
-          echo "HOME=$HOME"
-          whoami
-          ls -al "$HOME"
-          rustup toolchain list || true
-          rustup show || true
-          cargo version || true
-          cargo clippy --version || true
+      # - name: Install latest stable
+      #   uses: actions-rs/toolchain@v1
+      #   with:
+      #     profile: minimal
+      #     toolchain: stable
+      #     components: clippy
+      #     default: true
+      # - name: print rust info (after)
+      #   env:
+      #     RUSTUP_TOOLCHAIN: stable
+      #   run: |
+      #     echo "HOME=$HOME"
+      #     whoami
+      #     ls -al "$HOME"
+      #     rustup toolchain list || true
+      #     rustup show || true
+      #     cargo version || true
+      #     cargo clippy --version || true
 
   build:
     name: MegaLinter
@@ -114,7 +114,7 @@ jobs:
           VALIDATE_ALL_CODEBASE: true # ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }} # Validates all source when push on main, else just the git diff with main. Set &#39;true&#39; if you always want to lint all sources
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # ADD YOUR CUSTOM ENV VARIABLES HERE TO OVERRIDE VALUES OF .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
-          RUSTUP_TOOLCHAIN: stable
+          # RUSTUP_TOOLCHAIN: stable
 
       # Upload MegaLinter artifacts
       - name: Archive production artifacts
